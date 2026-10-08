@@ -34,6 +34,15 @@ $stage = Join-Path $dist "StationFlow-$ver"
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item (Join-Path $stage "plugins") -ItemType Directory -Force | Out-Null
 
+# Sync manifest version_number with csproj version (csproj is the single source of truth)
+$mfSrc = Join-Path $sfDir "package\manifest.json"
+$mfText = Get-Content $mfSrc -Raw
+$mfSync = $mfText -replace '"version_number"\s*:\s*"[^"]+"', ('"version_number": "' + $ver + '"')
+if ($mfSync -ne $mfText) {
+    [System.IO.File]::WriteAllText($mfSrc, $mfSync, (New-Object System.Text.UTF8Encoding($false)))
+    Write-Host "manifest.json version_number synced to $ver"
+}
+
 foreach ($f in @("manifest.json", "README.md", "CHANGELOG.md", "icon.png")) {
     $src = Join-Path $sfDir "package\$f"
     if (-not (Test-Path $src)) { throw "missing package file: $f" }
