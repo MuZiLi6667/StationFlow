@@ -1,0 +1,9 @@
+{
+    "name": "StationFlow",
+    "version_number": "0.2.0",
+    "website_url": "https://github.com/MuZiLi6667/StationFlow",
+    "description": "Batch-manage interstellar logistics stations: name/slot-driven auto pairing (point-to-point, planet & star-system routes), traffic heatmap, diagnostics, batch tools and auto-pilot. Press F8 for the panel.",
+    "dependencies": [
+        "BepInEx-BepInExPack_Dyson_Sphere_Program-5.4.2101"
+    ]
+}
